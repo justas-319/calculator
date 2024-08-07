@@ -33,9 +33,13 @@ answer.grid(column=2, row=0)
 def equal():
     txt = equation.get()
     #print(txt)
-    result = eval(txt)
-    answer.delete(0, END)
-    answer.insert(0, str(result))
+    if isAvailableForCalculation(txt):
+        result = eval(txt)
+        answer.delete(0, END)
+        answer.insert(0, str(result))
+    else:
+        answer.delete(0, END)
+        answer.insert(0, "not a mathematical expretion")
 
 # skaiciu mygtuku dalykai
 def skaiciai(dalykas):
@@ -45,6 +49,18 @@ def istrinti():
     tempTXT = equation.get()[:-1]
     equation.delete(0, END)
     equation.insert(0, tempTXT)
+
+# check if we want to calculate
+def isAvailableForCalculation(string):
+    string = string.replace(" ", "")
+    available = ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "+", "-", "*", "/", "(", ")", ".")
+    arGerai = 0
+    for i in string:
+        if i in available:
+            arGerai = 0
+        else:
+            return(False)
+    return(True)
 
 # veiksmu mygtukai
 eql = Button(frame2, text = "=", command = equal, height=buttonHeight, width=buttonWidth)
